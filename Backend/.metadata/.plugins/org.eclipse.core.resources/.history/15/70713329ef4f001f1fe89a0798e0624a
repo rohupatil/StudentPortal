@@ -1,0 +1,14 @@
+package com.studentportal.main.entity;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+public class Admin {
+
+	
+	   private String name;
+	   private String password;
+	   
+	   @Enumerated(EnumType.STRING)
+	    private Role role;
+}

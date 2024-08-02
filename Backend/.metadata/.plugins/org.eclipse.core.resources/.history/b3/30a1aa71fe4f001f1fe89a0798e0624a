@@ -1,0 +1,10 @@
+package com.studentportal.main.service;
+
+import com.studentportal.main.DTO.SubjectDto;
+import com.studentportal.main.entity.Subject;
+
+public interface SubjectService {
+	
+String addSubject(SubjectDto subDto);
+
+}

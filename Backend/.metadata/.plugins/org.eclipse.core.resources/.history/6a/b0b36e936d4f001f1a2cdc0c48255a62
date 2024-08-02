@@ -1,0 +1,5 @@
+spring.application.name=StudentPortal
+
+
+server.port=8090
+

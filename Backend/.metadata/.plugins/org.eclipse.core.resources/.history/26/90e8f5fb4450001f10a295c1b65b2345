@@ -1,0 +1,25 @@
+spring.application.name=StudentPortal
+
+
+server.port=8090
+
+#spring.datasource.url=jdbc:h2:mem:studentPortal
+#
+#spring.datasource.driver-class-name=org.h2.Driver
+
+jwt.secret=6b8f81c68c014e9b935cba727d46e503
+
+logging.level.org.springframework.security=DEBUG
+
+
+
+# Enable H2 console
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# Optional: Set the URL for the H2 database
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+

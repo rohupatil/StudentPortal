@@ -1,0 +1,5 @@
+package com.studentportal.main.DAO;
+
+public interface AdminDao {
+
+}

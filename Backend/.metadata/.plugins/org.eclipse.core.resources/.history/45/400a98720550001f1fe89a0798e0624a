@@ -1,0 +1,10 @@
+package com.studentportal.main.service;
+
+import com.studentportal.main.DTO.StudentDto;
+import com.studentportal.main.entity.Student;
+
+public interface StudentService {
+	
+	Student createStudent(StudentDto student);
+
+}

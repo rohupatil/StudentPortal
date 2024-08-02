@@ -1,0 +1,15 @@
+package com.studentportal.main.service;
+
+import com.studentportal.main.DTO.SubjectDto;
+
+public class SubjcetServiceImpl implements SubjectService{
+
+	@Override
+	public void addSubject(SubjectDto subDto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+}

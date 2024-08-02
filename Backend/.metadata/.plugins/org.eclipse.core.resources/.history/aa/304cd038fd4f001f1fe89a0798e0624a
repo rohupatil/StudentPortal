@@ -1,0 +1,11 @@
+package com.studentportal.main.service;
+
+public class SubjcetServiceImpl implements SubjectService{
+
+	@Override
+	public void addSubject() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,9 @@
+package com.studentportal.main.service;
+
+import com.studentportal.main.DTO.SubjectDto;
+
+public interface SubjectService {
+	
+	void addSubject(SubjectDto subDto);
+
+}

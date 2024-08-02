@@ -1,0 +1,52 @@
+package com.studentportal.main.service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.studentportal.main.DAO.StudentDao;
+import com.studentportal.main.DAO.SubjectDao;
+import com.studentportal.main.DTO.StudentDto;
+import com.studentportal.main.entity.Role;
+import com.studentportal.main.entity.Student;
+import com.studentportal.main.entity.Subject;
+
+@Service
+public class StudentServiceImpl implements  StudentService{
+	
+	@Autowired
+	private StudentDao dao;
+	
+	@Autowired
+	private SubjectDao subdao;
+
+	@Override
+	public Student createStudent(StudentDto studentDto) {
+	    if (studentDto != null) {
+	        Student stu = new Student();
+	        stu.setAddress(studentDto.getAddress());
+	        stu.setName(studentDto.getName());
+	        stu.setPassword(studentDto.getPassword());
+	        stu.setRole(Role.STUDENT);
+	        
+	        Set<Subject> subjects = new HashSet<>();
+	        
+	        // Check if subjectNames is null before processing
+	        if (studentDto.getSubjectNames() != null) {
+	            for (String subjectName : studentDto.getSubjectNames()) {
+	                Subject su = subdao.findByName(subjectName);
+	                if (su != null) {
+	                    subjects.add(su);
+	                }
+	            }
+	        }
+	        
+	        stu.setSubjects(subjects);
+	        return dao.save(stu);
+	    }
+	    return null;
+	}
+
+}

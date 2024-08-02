@@ -1,0 +1,6 @@
+package com.studentportal.main.DTO;
+
+public class StudentDto {
+	
+
+}

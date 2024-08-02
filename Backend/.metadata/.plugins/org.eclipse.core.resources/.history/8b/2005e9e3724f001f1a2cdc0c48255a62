@@ -1,0 +1,5 @@
+package com.studentportal.main.service;
+
+public interface StudentService {
+
+}

@@ -1,0 +1,5 @@
+package com.studentportal.main.security;
+
+public class JwtRequestFilter {
+
+}

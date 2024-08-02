@@ -1,0 +1,45 @@
+package com.studentportal.main.service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.studentportal.main.DAO.StudentDao;
+import com.studentportal.main.DTO.StudentDto;
+import com.studentportal.main.entity.Role;
+import com.studentportal.main.entity.Student;
+import com.studentportal.main.entity.Subject;
+
+@Service
+public class StudentServiceImpl implements  StudentService{
+	
+	@Autowired
+	private StudentDao dao;
+
+	@Override
+	public Student createStudent(StudentDto student) {
+		// TODO Auto-generated method stub
+		Student stu=null;
+		if(student != null)
+		{
+			
+		stu.setAddress(student.getAddress());
+		stu.setName(student.getName());
+		stu.setPassword(student.getPassword());
+		stu.setRole(Role.STUDENT);
+		
+		
+        Set<Subject> subjects = new HashSet<>();
+
+		
+			return dao.save(stu);
+			
+			
+		}
+		
+		return null;
+	}
+
+}

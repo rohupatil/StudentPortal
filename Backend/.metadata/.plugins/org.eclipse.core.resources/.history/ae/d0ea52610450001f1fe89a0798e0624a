@@ -1,0 +1,67 @@
+package com.studentportal.main.service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.studentportal.main.DAO.StudentDao;
+import com.studentportal.main.DAO.SubjectDao;
+import com.studentportal.main.DTO.StudentDto;
+import com.studentportal.main.entity.Role;
+import com.studentportal.main.entity.Student;
+import com.studentportal.main.entity.Subject;
+
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+public class StudentServiceImpl implements  StudentService{
+	
+	@Autowired
+	private StudentDao dao;
+	
+	@Autowired
+	private SubjectDao subdao;
+
+	@Override
+	@Transactional
+	public Student createStudent(StudentDto studentDto) {
+	    if (studentDto != null) {
+	        Student stu = new Student();
+	        stu.setAddress(studentDto.getAddress());
+	        stu.setName(studentDto.getName());
+	        stu.setPassword(studentDto.getPassword());
+	        stu.setRole(Role.STUDENT);
+	        
+	        Set<Subject> subjects = new HashSet<>();
+	        
+	        if (studentDto.getSubjectNames() != null) {
+	            for (String subjectName : studentDto.getSubjectNames()) {
+	                Subject su = subdao.findByName(subjectName);
+	                if (su == null) {
+	                    su = new Subject();
+	                    su.setName(subjectName);
+	                    su = subdao.save(su); // Save new subject
+	                }
+	                subjects.add(su);
+	            }
+	        }
+	        
+	        stu.setSubjects(subjects);
+	        Student savedStudent = dao.save(stu);
+
+	        // Optional: Update subjects with new student reference
+	        for (Subject subject : subjects) {
+	            subject.getStudents().add(savedStudent);
+	            subdao.save(subject);
+	        }
+
+	        return savedStudent;
+	    }
+	    return null;
+	}
+
+
+}

@@ -1,0 +1,32 @@
+package com.studentportal.main.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.studentportal.main.DAO.StudentDao;
+import com.studentportal.main.entity.Role;
+import com.studentportal.main.entity.Student;
+
+@Service
+public class StudentServiceImpl implements  StudentService{
+	
+	@Autowired
+	private StudentDao dao;
+
+	@Override
+	public Student createStudent(StudentDto student) {
+		// TODO Auto-generated method stub
+		Student stu=null;
+		if(student != null)
+		{
+			
+			stu.setAddress(student.ge);
+			return dao.save(student);
+			
+			
+		}
+		
+		return null;
+	}
+
+}

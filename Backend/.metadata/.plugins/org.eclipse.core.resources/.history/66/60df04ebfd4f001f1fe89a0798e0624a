@@ -1,0 +1,27 @@
+package com.studentportal.main.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.studentportal.main.DAO.SubjectDao;
+import com.studentportal.main.DTO.SubjectDto;
+import com.studentportal.main.entity.Subject;
+
+public class SubjcetServiceImpl implements SubjectService{
+	@Autowired
+	private SubjectDao subdao;
+
+	@Override
+	public Subject addSubject(SubjectDto subDto) {
+		// TODO Auto-generated method stub
+		Subject sub=new Subject();
+		if(subDto != null)	
+		{
+		return	sub.setName(subDto.getName());
+		}
+	
+		
+	}
+
+	
+
+}
