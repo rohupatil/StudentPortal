@@ -14,6 +14,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -41,11 +42,12 @@ public Student() {
 	// TODO Auto-generated constructor stub
 }
 	
-	  @ManyToMany
+	  @ManyToMany(fetch = FetchType.LAZY)
 	    @JoinTable(
 	        name = "student_subject",
 	        joinColumns = @JoinColumn(name = "student_id"),
-	        inverseJoinColumns = @JoinColumn(name = "subject_id"))
+	        inverseJoinColumns = @JoinColumn(name = "subject_id")
+	        )
 	    private Set<Subject> subjects = new HashSet<>();
 	  
 	  
@@ -64,6 +66,7 @@ public Student() {
 
 
 	@Override
+	@JsonIgnore
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return this.name;

@@ -1,5 +1,6 @@
 package com.studentportal.main.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.studentportal.main.DAO.StudentDao;
 import com.studentportal.main.DAO.SubjectDao;
 import com.studentportal.main.DTO.StudentDto;
+import com.studentportal.main.DTO.StudentResponseDto;
 import com.studentportal.main.entity.Role;
 import com.studentportal.main.entity.Student;
 import com.studentportal.main.entity.Subject;
@@ -21,64 +23,78 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class StudentServiceImpl implements  StudentService{
-	
+public class StudentServiceImpl implements StudentService {
 
 	@Autowired
-    private PasswordEncoder passwordEncoder;
-	
+	private PasswordEncoder passwordEncoder;
+
 	@Autowired
 	private StudentDao dao;
-	
+
 	@Autowired
 	private SubjectDao subdao;
 
 	@Override
 	@Transactional
 	public ResponseEntity<?> createStudent(StudentDto studentDto) {
-		String pass=	passwordEncoder.encode(studentDto.getPassword());
+		String pass = passwordEncoder.encode(studentDto.getPassword());
 
-        try {
-            if (studentDto != null) {
-                Student stu = new Student();
-                stu.setAddress(studentDto.getAddress());
-                stu.setName(studentDto.getName());
-                stu.setPassword(pass);
-                stu.setRole(Role.STUDENT);
+		try {
+			if (studentDto != null) {
+				Student stu = new Student();
+				stu.setAddress(studentDto.getAddress());
+				stu.setName(studentDto.getName());
+				stu.setPassword(pass);
+				stu.setRole(Role.STUDENT);
 
-                Set<Subject> subjects = new HashSet<>();
-                
-                if (studentDto.getSubjectNames() != null) {
-                    for (String subjectName : studentDto.getSubjectNames()) {
-                        Subject su = subdao.findByName(subjectName);
-                        if (su == null) {
-                            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Subject with name " + subjectName + " does not exist.");
-                        }
-                        subjects.add(su);
-                    }
-                }
+				Set<Subject> subjects = new HashSet<>();
 
-                stu.setSubjects(subjects);
-                Student savedStudent = dao.save(stu);
+				if (studentDto.getSubjectNames() != null) {
+					for (String subjectName : studentDto.getSubjectNames()) {
+						Subject su = subdao.findByName(subjectName);
+						if (su == null) {
+							return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+									.body("Subject with name " + subjectName + " does not exist.");
+						}
+						subjects.add(su);
+					}
+				}
 
-                for (Subject subject : subjects) {
-                    subject.getStudents().add(savedStudent);
-                    subdao.save(subject);
-                }
+				stu.setSubjects(subjects);
+				Student savedStudent = dao.save(stu);
 
-                return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
-            }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Student data is not provided.");
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
-        }
-    }
+				for (Subject subject : subjects) {
+					subject.getStudents().add(savedStudent);
+					subdao.save(subject);
+				}
+
+				return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
+			}
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Student data is not provided.");
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("An error occurred: " + ex.getMessage());
+		}
+	}
 
 	@Override
-	public List<Student> getallStudents() {
+	public List<StudentResponseDto> getallStudents() {
 		// TODO Auto-generated method stub
-		
-		return dao.findAll();
+
+		List<Student> list = dao.findAll();
+
+		List<StudentResponseDto> listdto = new ArrayList<>();
+
+		for (Student stu : list) {
+			StudentResponseDto dto = new StudentResponseDto();
+			dto.setAddress(stu.getAddress());
+			dto.setName(stu.getName());
+			dto.setRole(stu.getRole());
+
+			listdto.add(dto);
+		}
+
+		return listdto;
 	}
 
 }

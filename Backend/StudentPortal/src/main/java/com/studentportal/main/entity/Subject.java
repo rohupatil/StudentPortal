@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,8 +26,8 @@ public class Subject extends BaseEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	@ManyToMany(mappedBy = "subjects")
-	 @JsonIgnore
+	@ManyToMany(mappedBy = "subjects" ,fetch = FetchType.LAZY)
+	@JsonIgnore    //  used this to avoid recurrecursion 
 	private Set<Student> students = new HashSet<>();
 
 	public void addStudent(Student student) {
