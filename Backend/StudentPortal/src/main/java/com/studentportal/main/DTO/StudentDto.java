@@ -15,17 +15,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class StudentDto {
-	
-	
 
 	private String name;
 
 	private String address;
-	
-	
 
 	private String password;
-	
-	
-	   private Set<String> subjectNames = new HashSet<>();
+
+	private Set<String> subjectNames = new HashSet<>();
 }

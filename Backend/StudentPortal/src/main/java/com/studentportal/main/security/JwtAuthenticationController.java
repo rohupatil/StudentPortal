@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class JwtAuthenticationController {
 
     @Autowired
@@ -28,30 +30,24 @@ public class JwtAuthenticationController {
         try {
             System.out.println("Received authentication request with username: " + authenticationRequest.getUsername());
 
-            // Attempt authentication
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
 
-            // This line will be executed only if authentication is successful
-            System.out.println("-------------------");
+//            System.out.println("-------------------");
 
-            // Load user details
             final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
             System.out.println("UserDetails: " + userDetails);
 
-            // Generate JWT token
             final String jwt = jwtUtil.generateToken(userDetails.getUsername());
             System.out.println("JWT: " + jwt);
 
-            // Return response
             return ResponseEntity.ok(new JwtResponse(jwt));
 
         } catch (BadCredentialsException e) {
             System.out.println("Exception: Incorrect username or password");
             throw new Exception("Incorrect username or password", e);
         } catch (Exception e) {
-            // Log other exceptions
             System.out.println("Exception: " + e.getMessage());
             throw e;
         }

@@ -8,9 +8,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class SubjectResponseDto {
-public SubjectResponseDto() {
+
+	private String subjeactname;
+
+	public SubjectResponseDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-private String subjeactname;
 }
