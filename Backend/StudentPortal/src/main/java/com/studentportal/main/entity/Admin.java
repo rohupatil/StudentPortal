@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -50,4 +51,7 @@ public class Admin extends BaseEntity implements UserDetails {
 		// TODO Auto-generated method stub
 		return this.name;
 	}
+	
+	
+	
 }

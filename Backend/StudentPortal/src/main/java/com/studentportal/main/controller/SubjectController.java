@@ -21,7 +21,7 @@ public class SubjectController {
 	private SubjectService service;
 	
 	@PostMapping
-	public ResponseEntity<SubjectResponseDto> addSubject(@RequestBody SubjectDto dto){
+	public ResponseEntity<?> addSubject(@RequestBody SubjectDto dto){
 		
 		return ResponseEntity.ok(service.addSubject(dto));
 	}

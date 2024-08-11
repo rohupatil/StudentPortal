@@ -46,7 +46,8 @@ public class JwtAuthenticationController {
 
         } catch (BadCredentialsException e) {
             System.out.println("Exception: Incorrect username or password");
-            throw new Exception("Incorrect username or password", e);
+            return  ResponseEntity.badRequest().body("Incorrect username or password");
+//            throw new Exception("Incorrect username or password", e);
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
             throw e;

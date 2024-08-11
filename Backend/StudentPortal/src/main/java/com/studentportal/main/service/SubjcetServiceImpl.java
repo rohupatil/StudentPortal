@@ -3,6 +3,8 @@ package com.studentportal.main.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.studentportal.main.DAO.SubjectDao;
@@ -16,15 +18,22 @@ public class SubjcetServiceImpl implements SubjectService {
 	private SubjectDao subdao;
 
 	@Override
-	public SubjectResponseDto addSubject(SubjectDto subDto) {
+	public ResponseEntity<?> addSubject(SubjectDto subDto) {
 		// TODO Auto-generated method stub
 		SubjectResponseDto responsedto = new SubjectResponseDto();
 		Subject sub = new Subject();
+		
 		if (subDto != null) {
-			responsedto.setSubjeactname(subDto.getName());
-			sub.setName(subDto.getName());
-			subdao.save(sub);
-			return responsedto;
+			try {
+				responsedto.setSubjeactname(subDto.getName());
+				sub.setName(subDto.getName());
+				subdao.save(sub);
+	            return ResponseEntity.ok(responsedto);
+			} catch (DataIntegrityViolationException e) {
+				// TODO: handle exception
+                return ResponseEntity.badRequest().body("Subject name already exists. Please choose a different name.");
+
+			}
 		}
 		return null;
 	}

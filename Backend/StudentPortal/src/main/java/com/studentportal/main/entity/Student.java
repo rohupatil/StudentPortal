@@ -26,44 +26,32 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Student extends BaseEntity implements UserDetails{
-	
+public class Student extends BaseEntity implements UserDetails {
+
 	@Column(unique = true)
 	private String name;
-	
+
 	private String address;
-	
+
 	private String password;
-	
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
-public Student() {
-	// TODO Auto-generated constructor stub
-}
-	
-	  @ManyToMany(fetch = FetchType.LAZY)
-	    @JoinTable(
-	        name = "student_subject",
-	        joinColumns = @JoinColumn(name = "student_id"),
-	        inverseJoinColumns = @JoinColumn(name = "subject_id")
-	        )
-	    private Set<Subject> subjects = new HashSet<>();
-	  
-	  
-	  public void addSubject(Subject subject) {
-	        subjects.add(subject);
-	        subject.getStudents().add(this); 
-	    }
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "student_subject", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+	private Set<Subject> subjects = new HashSet<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		  Set<GrantedAuthority> authorities = new HashSet<>();
-	        authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
-	        return authorities;
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+		return authorities;
 	}
-
 
 	@Override
 	@JsonIgnore

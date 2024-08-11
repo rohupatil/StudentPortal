@@ -30,8 +30,5 @@ public class Subject extends BaseEntity {
 	@JsonIgnore    //  used this to avoid recurrecursion 
 	private Set<Student> students = new HashSet<>();
 
-	public void addStudent(Student student) {
-		students.add(student);
-		student.getSubjects().add(this); 
-	}
+
 }
