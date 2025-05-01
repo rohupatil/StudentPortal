@@ -1,10 +1,4 @@
 # StudentPortal
-
-## Project Status
-- **BackEnd**: Completed with Spring Security .follow master branch to see pushed data.
-
-**Important Note**: The H2 database was not functioning properly with security applied, so MySQL is used instead. Ensure you have a MySQL database with a username and password set up.
-
 ## How to Run the Project
 
 1. **Run as Spring Boot Application**
